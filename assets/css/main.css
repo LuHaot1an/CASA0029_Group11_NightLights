@@ -1,151 +1,466 @@
+/* ───────────────────────────────────────
+   Design tokens — global colour & spacing vars
+   ─────────────────────────────────────── */
 :root {
-  --bg-base: #060b17;
+  --bg-base: #05070b;
+  --bg-deep: #0b1020;
   --bg-elevated: rgba(11, 19, 38, 0.72);
-  --text-main: #e8efff;
+  --text-main: #f5f7fa;
   --text-muted: #9fb0cf;
-  --accent-cyan: #55e4ff;
-  --accent-orange: #ff9a3d;
-  --border-soft: rgba(132, 174, 255, 0.3);
+  --accent-warm: #ffd84d;          /* primary highlight */
+  --accent-orange: #ffbe3c;
+  --glow-warm: rgba(255, 190, 60, 0.18);
+  --glow-cool: rgba(100, 140, 255, 0.08);
+  --border-soft: rgba(255, 210, 80, 0.12);
+  --border-panel: rgba(132, 174, 255, 0.18);
 }
 
-* {
-  box-sizing: border-box;
-}
+/* ─── Reset ─── */
+* { box-sizing: border-box; }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family:
-    "Inter",
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
   background: var(--bg-base);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
 }
 
-.section {
-  position: relative;
-  overflow: hidden;
-}
+/* ───────────────────────────────────────
+   fullPage.js overrides
+   ─────────────────────────────────────── */
+.section { position: relative; overflow: hidden; }
+.fp-overflow { height: 100%; }
+.fp-watermark { display: none !important; }   /* hide GPLv3 watermark */
 
-.fp-overflow {
-  height: 100%;
-}
-
+/* ───────────────────────────────────────
+   COVER — layout wrapper
+   ─────────────────────────────────────── */
 .section-cover {
+  height: 100%;
   display: flex;
-  align-items: center;
-  background:
-    radial-gradient(circle at 20% 25%, rgba(85, 228, 255, 0.16), transparent 42%),
-    radial-gradient(circle at 78% 70%, rgba(255, 154, 61, 0.18), transparent 36%),
-    linear-gradient(160deg, #050914 0%, #081126 45%, #0b1b39 100%);
+  flex-direction: column;
+  background: linear-gradient(165deg, #05070b 0%, #0a0e1a 40%, #0b1020 100%);
 }
 
-.cover-overlay {
+/* Allow fullPage.js overflow wrappers to stretch to full height */
+.section-cover > .fp-overflow,
+.section-cover > .fp-overflow > .fp-overflow-x {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+/* Faint grid lines for visual texture */
+.cover-grid-overlay {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
   pointer-events: none;
+  z-index: 0;
 }
 
-.cover-content {
+/* SVG noise filter for film-grain feel */
+.cover-noise-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ───────────────────────────────────────
+   COVER — top navigation bar
+   ─────────────────────────────────────── */
+.cover-nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 5vw;
+  flex-shrink: 0;
+}
+
+.cover-nav-brand {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: rgba(245, 247, 250, 0.5);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.cover-nav-links { display: flex; gap: 2rem; }
+
+.cover-nav-link {
+  font-size: 0.82rem;
+  color: rgba(245, 247, 250, 0.55);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.25s;
+  position: relative;
+}
+
+.cover-nav-link:hover,
+.cover-nav-link.active {
+  color: var(--accent-warm);
+}
+
+/* Underline indicator for the active nav link */
+.cover-nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: var(--accent-warm);
+  border-radius: 1px;
+}
+
+/* ───────────────────────────────────────
+   COVER — hero content area
+   ─────────────────────────────────────── */
+.cover-main {
   position: relative;
   z-index: 1;
-  max-width: 900px;
+  flex: 1 1 0%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 5vw;
+}
+
+.cover-left {
+  flex: 0 0 55%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   animation: fadeUp 0.9s ease both;
 }
 
-.eyebrow {
-  color: var(--accent-cyan);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.8rem;
-  margin-bottom: 1rem;
+/* ─── Title hierarchy ─── */
+.cover-title {
+  font-size: clamp(2.6rem, 4.2vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.18;
+  margin: 0 0 1.8rem 0;
+  letter-spacing: -0.015em;
 }
 
-.cover-subtitle {
-  color: var(--text-muted);
+.cover-title-sub {
+  font-weight: 400;
+  font-size: clamp(1.4rem, 2.4vw, 2.2rem);
+  color: rgba(245, 247, 250, 0.7);
 }
 
-.group-members {
-  color: #bfd0ef;
+.cover-title-accent {
+  color: var(--accent-warm);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.4vw, 3.4rem);
 }
 
-.btn-glow {
-  color: var(--text-main);
-  border: 1px solid rgba(85, 228, 255, 0.55);
-  background: linear-gradient(
-    135deg,
-    rgba(85, 228, 255, 0.25),
-    rgba(85, 228, 255, 0.06)
-  );
-  box-shadow:
-    0 0 0 rgba(85, 228, 255, 0.4),
-    0 0 26px rgba(85, 228, 255, 0.25);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease;
+/* Collapsible project description — animated via max-height */
+.cover-desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(245, 247, 250, 0.55);
+  margin-bottom: 2.4rem;
+  max-width: 520px;
+  overflow: hidden;
+  transition: opacity 0.35s ease, max-height 0.4s ease, margin-bottom 0.4s ease;
 }
 
-.btn-glow:hover {
-  color: #f8fcff;
+.cover-desc[hidden] {
+  display: block !important;  /* keep in DOM for transition */
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  pointer-events: none;
+}
+
+.cover-desc.is-visible {
+  max-height: 200px;
+  opacity: 1;
+}
+
+/* ─── Cover buttons ─── */
+.cover-buttons { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.5rem; }
+
+.btn-cover-primary {
+  padding: 0.9rem 2.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0a0e18;
+  background: var(--accent-warm);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 20px rgba(255, 216, 77, 0.25);
+}
+.btn-cover-primary:hover {
   transform: translateY(-1px);
-  box-shadow:
-    0 0 0 rgba(85, 228, 255, 0.4),
-    0 0 36px rgba(85, 228, 255, 0.45);
+  box-shadow: 0 0 32px rgba(255, 216, 77, 0.4);
 }
 
-.section-page1 {
-  background:
-    radial-gradient(circle at 90% 5%, rgba(255, 154, 61, 0.12), transparent 30%),
-    linear-gradient(180deg, #050913 0%, #07101f 100%);
+.btn-cover-outline {
+  padding: 0.9rem 2.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-main);
+  background: transparent;
+  border: 1px solid rgba(245, 247, 250, 0.22);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-cover-outline:hover {
+  border-color: var(--accent-warm);
+  color: var(--accent-warm);
 }
 
-.glass-panel {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-soft);
-  border-radius: 14px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
-}
-
-.panel-muted {
-  color: var(--text-muted);
-}
-
-.map-container {
+/* ─── Canvas sits behind all cover content ─── */
+#coverCanvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-height: 380px;
-  border-radius: 14px;
-  border: 1px solid var(--border-soft);
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  z-index: 0;
+  pointer-events: none;
 }
 
-.section-page1 .glass-panel {
-  animation: fadeUp 0.55s ease both;
+/* ───────────────────────────────────────
+   COVER — footer metadata tags
+   ─────────────────────────────────────── */
+.cover-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 5vw;
+  flex-shrink: 0;
 }
 
-#regionButtons .btn {
-  border-radius: 999px;
+.cover-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  color: rgba(245, 247, 250, 0.4);
+  letter-spacing: 0.02em;
+}
+
+.cover-tag-sep { color: rgba(245, 247, 250, 0.2); }
+
+.cover-tag-hl { color: var(--accent-warm); }
+
+.cover-footer-right {
+  font-size: 0.72rem;
+  color: rgba(245, 247, 250, 0.28);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* ───────────────────────────────────────
+   PAGE 1 — full-bleed map with narrative panel
+   ─────────────────────────────────────── */
+.section-page1 {
+  position: relative;
+  background: var(--bg-base);
+}
+
+/* The map fills the entire section */
+.page1-map-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* ─── Left narrative sidebar (overlays the map) ─── */
+.page1-panel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 370px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  padding: 3.5rem 2.4rem 3rem;
+  /* Gradient fades from opaque on the left to transparent on the right */
+  background: linear-gradient(
+    105deg,
+    rgba(5, 7, 11, 0.92) 0%,
+    rgba(5, 7, 11, 0.82) 70%,
+    rgba(5, 7, 11, 0) 100%
+  );
+  pointer-events: none;       /* let clicks pass through to the map */
+  animation: fadeUp 0.7s 0.15s ease both;
+}
+
+/* Re-enable pointer events on child elements */
+.page1-panel > * {
+  pointer-events: auto;
+}
+
+/* ─── Year badge ─── */
+.page1-year-tag {
+  display: inline-block;
+  width: fit-content;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+  background: rgba(255, 216, 77, 0.1);
+  border: 1px solid rgba(255, 216, 77, 0.2);
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  margin-bottom: 1.2rem;
+}
+
+/* ─── Section title and body text ─── */
+.page1-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+}
+
+.page1-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 1.1rem;
+}
+
+.page1-body {
   font-size: 0.82rem;
-  line-height: 1;
+  line-height: 1.65;
+  color: rgba(245, 247, 250, 0.48);
+  margin: 0 0 1.6rem;
 }
 
+/* ─── Region quick-jump block ─── */
+.page1-region-block {
+  margin-bottom: 1.6rem;
+}
+
+.page1-region-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(159, 176, 207, 0.6);
+  margin: 0 0 0.55rem;
+}
+
+.page1-region-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* Pill-shaped region buttons */
+.page1-region-btn {
+  padding: 0.32rem 0.72rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(245, 247, 250, 0.5);
+  background: transparent;
+  border: 1px solid rgba(245, 247, 250, 0.12);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.page1-region-btn:hover {
+  color: var(--text-main);
+  border-color: rgba(245, 247, 250, 0.3);
+  background: rgba(245, 247, 250, 0.05);
+}
+
+.page1-region-btn.is-active {
+  color: var(--accent-warm);
+  border-color: rgba(255, 216, 77, 0.4);
+  background: rgba(255, 216, 77, 0.1);
+}
+
+/* ─── China transition block ─── */
+.page1-china-transition {
+  border-top: 1px solid rgba(255, 216, 77, 0.1);
+  padding-top: 1.3rem;
+}
+
+.page1-china-text {
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: rgba(245, 247, 250, 0.45);
+  margin: 0 0 1rem;
+}
+
+.page1-china-text strong {
+  color: var(--accent-warm);
+  font-weight: 600;
+}
+
+/* ─── Call-to-action button ─── */
+.page1-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1.6rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #0a0e18;
+  background: var(--accent-warm);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 18px rgba(255, 216, 77, 0.2);
+}
+
+.page1-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 30px rgba(255, 216, 77, 0.35);
+}
+
+.page1-cta svg {
+  transition: transform 0.2s;
+}
+
+.page1-cta:hover svg {
+  transform: translateX(3px);
+}
+
+/* ─── Token warning banner ─── */
 .token-warning {
   position: absolute;
   right: 1.5rem;
   bottom: 1.5rem;
+  z-index: 3;
   max-width: 360px;
   padding: 0.7rem 0.9rem;
   border-radius: 10px;
@@ -154,24 +469,47 @@ body {
   border: 1px solid rgba(255, 154, 61, 0.36);
 }
 
+/* ─── Mapbox navigation control overrides ─── */
 .mapboxgl-ctrl-group {
-  border: 1px solid rgba(85, 228, 255, 0.3) !important;
-  background: rgba(8, 20, 43, 0.72) !important;
+  border: 1px solid rgba(255, 216, 77, 0.2) !important;
+  background: rgba(8, 20, 43, 0.78) !important;
 }
-
 .mapboxgl-ctrl button {
   background-color: transparent !important;
 }
 
+/* ───────────────────────────────────────
+   Responsive breakpoints
+   ─────────────────────────────────────── */
+
+/* Tablet / small desktop */
 @media (max-width: 991px) {
-  .section-page1 .row {
-    overflow-y: auto;
+  .cover-nav { padding: 1rem 1.5rem; }
+  .cover-nav-links { gap: 1rem; }
+  .cover-main { padding: 0 1.5rem; }
+  .cover-left {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+  .cover-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    text-align: center;
   }
 
-  .section-page1 .col-lg-9 {
-    min-height: 55vh;
+  /* Panel stacks below the map on narrow screens */
+  .page1-panel {
+    width: 100%;
+    position: relative;
+    background: rgba(5, 7, 11, 0.88);
+    padding: 1.5rem;
   }
-
+  .page1-map-bg {
+    position: relative;
+    min-height: 50vh;
+  }
   .token-warning {
     right: 0.8rem;
     left: 0.8rem;
@@ -180,13 +518,127 @@ body {
   }
 }
 
+/* Mobile */
+@media (max-width: 640px) {
+  .cover-nav-links { display: none; }
+  .cover-title { font-size: 1.6rem; }
+  .cover-title-sub { font-size: 1rem; }
+}
+
+/* ───────────────────────────────────────
+   PAGE 1 — panel slide-out during China transition
+   ─────────────────────────────────────── */
+.page1-panel.is-fading-out {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none !important;
+}
+
+/* ───────────────────────────────────────
+   PAGE 2 — placeholder section
+   ─────────────────────────────────────── */
+.section-page2 {
+  background: linear-gradient(180deg, #050913 0%, #0b1020 100%);
+}
+
+.page2-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+
+.page2-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+  background: rgba(255, 216, 77, 0.1);
+  border: 1px solid rgba(255, 216, 77, 0.2);
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  margin-bottom: 1.4rem;
+}
+
+.page2-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 0.6rem;
+}
+
+.page2-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ───────────────────────────────────────
+   Continent tooltip (follows the cursor on map hover)
+   ─────────────────────────────────────── */
+.continent-tooltip {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  background: rgba(8, 14, 30, 0.92);
+  border: 1px solid rgba(255, 68, 68, 0.35);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: var(--text-main);
+  backdrop-filter: blur(6px);
+  min-width: 175px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+.continent-tooltip strong {
+  display: block;
+  font-size: 0.84rem;
+  color: #ff6b6b;
+  margin-bottom: 2px;
+  letter-spacing: 0.02em;
+}
+
+/* Unit label (e.g. nW/cm²/sr) */
+.ct-unit {
+  font-size: 0.64rem;
+  color: rgba(159, 176, 207, 0.6);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+/* Key-value rows inside the tooltip */
+.ct-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ct-row:last-child { border-bottom: none; }
+
+.ct-row span:first-child {
+  color: var(--text-muted);
+}
+
+.ct-row span:last-child {
+  font-weight: 600;
+  color: var(--accent-warm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ───────────────────────────────────────
+   Shared keyframe animations
+   ─────────────────────────────────────── */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

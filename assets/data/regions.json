@@ -6,10 +6,16 @@
     "zoom": 1.35
   },
   {
-    "id": "north-america",
-    "label": "North America",
-    "center": [-98, 40],
-    "zoom": 2.35
+    "id": "asia",
+    "label": "Asia",
+    "center": [95, 30],
+    "zoom": 2.5
+  },
+  {
+    "id": "africa",
+    "label": "Africa",
+    "center": [20, 2],
+    "zoom": 2.5
   },
   {
     "id": "europe",
@@ -18,21 +24,27 @@
     "zoom": 3.1
   },
   {
-    "id": "east-asia",
-    "label": "East Asia",
-    "center": [118, 31],
+    "id": "north-america",
+    "label": "North America",
+    "center": [-98, 40],
+    "zoom": 2.35
+  },
+  {
+    "id": "south-america",
+    "label": "South America",
+    "center": [-58, -15],
+    "zoom": 2.5
+  },
+  {
+    "id": "oceania",
+    "label": "Oceania",
+    "center": [140, -25],
     "zoom": 3.0
   },
   {
-    "id": "china",
-    "label": "China",
-    "center": [104.5, 35.8],
-    "zoom": 3.1
-  },
-  {
-    "id": "india",
-    "label": "India",
-    "center": [78.6, 22.7],
-    "zoom": 3.4
+    "id": "antarctica",
+    "label": "Antarctica",
+    "center": [0, -82],
+    "zoom": 2.0
   }
 ]

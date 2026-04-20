@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Group 11 | Night Lights</title>
+
+    <!-- Google Fonts — Inter for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Vendor CSS: Bootstrap, fullPage.js, Mapbox GL -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -16,90 +23,142 @@
       rel="stylesheet"
       href="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.css"
     />
+
+    <!-- Project styles -->
     <link rel="stylesheet" href="./assets/css/main.css" />
   </head>
   <body>
+
+    <!-- fullPage.js wrapper — each <section> is a full-screen slide -->
     <div id="fullpage">
+
+      <!-- ============================
+           COVER SECTION
+           ============================ -->
       <section class="section section-cover">
-        <div class="cover-overlay"></div>
-        <div class="container cover-content text-center">
-          <p class="eyebrow">CASA0029 Urban Data Visualisation</p>
-          <h1 class="display-3 fw-bold">Urban Expansion Imbalance</h1>
-          <p class="lead cover-subtitle">
-            A Night-time Lights Perspective (2000-2024)
-          </p>
-          <p class="group-members mb-4">
-            Group 11 | Chenyi Zhao · Haotian Lu · Jiayi Cheng
-          </p>
-          <button id="startExploringBtn" class="btn btn-glow btn-lg px-4 py-2">
-            Start Exploring
-          </button>
+        <!-- Animated particle background -->
+        <canvas id="coverCanvas"></canvas>
+        <!-- Subtle grid and noise overlays for texture -->
+        <div class="cover-grid-overlay"></div>
+        <div class="cover-noise-overlay"></div>
+
+        <!-- Top navigation bar -->
+        <nav class="cover-nav">
+          <span class="cover-nav-brand">GROUP 11 / URBAN ANALYTICS</span>
+          <div class="cover-nav-links">
+            <a href="#cover" class="cover-nav-link active">Home</a>
+            <a href="#page1" class="cover-nav-link">Global</a>
+            <a href="#" class="cover-nav-link">China</a>
+            <a href="#" class="cover-nav-link">Corridors</a>
+            <a href="#" class="cover-nav-link">Layers</a>
+            <a href="#" class="cover-nav-link">Hierarchies</a>
+          </div>
+        </nav>
+
+        <!-- Hero content -->
+        <div class="cover-main">
+          <div class="cover-left">
+            <h1 class="cover-title">
+              Urban Expansion Imbalance<br>
+              <span class="cover-title-sub">seen from the perspective of</span><br>
+              <span class="cover-title-accent">night-time lights</span>
+            </h1>
+            <!-- Collapsible project description -->
+            <p id="coverDesc" class="cover-desc" hidden>
+              From global patterns to regional mechanisms, this project uses night-time lights to trace where urban growth occurs, how it evolves, and why it is uneven across space.
+            </p>
+            <div class="cover-buttons">
+              <button id="startExploringBtn" class="btn-cover-primary">Start Exploring ↓</button>
+              <button id="toggleDescBtn" class="btn-cover-outline">View Research Logic</button>
+            </div>
+          </div>
         </div>
+
+        <!-- Footer tags summarising the project scope -->
+        <footer class="cover-footer">
+          <div class="cover-footer-left">
+            <span class="cover-tag">2000–2024</span>
+            <span class="cover-tag-sep">|</span>
+            <span class="cover-tag"><span class="cover-tag-hl">Global</span> → <span class="cover-tag-hl">China</span></span>
+            <span class="cover-tag-sep">|</span>
+            <span class="cover-tag">Light as Urban Proxy</span>
+          </div>
+        </footer>
       </section>
 
+      <!-- ============================
+           PAGE 1 — Global Nighttime Lights Map
+           ============================ -->
       <section class="section section-page1">
-        <div class="container-fluid h-100 py-3 py-md-4 px-3 px-md-4">
-          <div class="row h-100 g-3">
-            <aside class="col-12 col-lg-3 d-flex flex-column gap-3">
-              <div class="glass-panel p-3">
-                <h2 class="h4 mb-2">Page 1</h2>
-                <p class="mb-0 panel-muted">
-                  Global Nighttime Lights Dynamic Map
-                </p>
-              </div>
+        <!-- Full-bleed Mapbox GL container -->
+        <div id="mapContainer" class="page1-map-bg"></div>
+        <!-- Shown when Mapbox token is missing or invalid -->
+        <div
+          id="tokenWarning"
+          class="token-warning d-none"
+          role="alert"
+          aria-live="polite"
+        >
+          Set your Mapbox token in <code>assets/js/app.js</code> to load
+          the map.
+        </div>
 
-              <div class="glass-panel p-3">
-                <label for="yearRange" class="form-label fw-semibold"
-                  >Year: <span id="yearLabel">2024</span></label
-                >
-                <input
-                  id="yearRange"
-                  class="form-range"
-                  type="range"
-                  min="2000"
-                  max="2024"
-                  step="1"
-                  value="2024"
-                />
-                <button id="playPauseBtn" class="btn btn-outline-light btn-sm">
-                  Play
-                </button>
-              </div>
+        <!-- Left narrative panel overlaying the map -->
+        <aside class="page1-panel">
+          <span class="page1-year-tag">2024</span>
 
-              <div class="glass-panel p-3">
-                <p class="small text-uppercase panel-muted mb-2">Jump to region</p>
-                <div id="regionButtons" class="d-flex flex-wrap gap-2"></div>
-              </div>
+          <h2 class="page1-title">Global Nighttime Lights</h2>
+          <p class="page1-subtitle">A global snapshot of urban brightness and spatial imbalance</p>
 
-              <div class="glass-panel p-3 mt-auto">
-                <p class="small text-uppercase panel-muted mb-2">Insight</p>
-                <p id="yearInsight" class="mb-0">
-                  2024 highlights mature global light cores and expanding belts
-                  across Asia and Africa.
-                </p>
-              </div>
-            </aside>
+          <p class="page1-body">
+            Nighttime light is unevenly distributed across the globe. East Asia, Europe,
+            and eastern North America form three dominant luminous clusters, tracing the
+            world's most concentrated corridors of economic activity. In contrast, vast
+            stretches of Africa, Central Asia, and the Amazon basin remain largely in
+            darkness — a stark visual reminder of the spatial inequality in energy access
+            and urban development that persists today.
+          </p>
 
-            <main class="col-12 col-lg-9 h-100">
-              <div id="mapContainer" class="map-container"></div>
-              <div
-                id="tokenWarning"
-                class="token-warning d-none"
-                role="alert"
-                aria-live="polite"
-              >
-                Set your Mapbox token in <code>assets/js/app.js</code> to load
-                the map.
-              </div>
-            </main>
+          <!-- Region quick-jump buttons (populated by JS) -->
+          <div class="page1-region-block">
+            <p class="page1-region-label">Jump to region</p>
+            <div id="regionButtons" class="page1-region-grid"></div>
           </div>
+
+          <!-- Transition prompt leading to the China section -->
+          <div class="page1-china-transition">
+            <p class="page1-china-text">
+              Among all regions, <strong>China</strong> stands out with one of the most
+              dynamic nighttime light patterns: rapid expansion, corridor formation,
+              and stark urban–rural contrasts. The next section takes a closer look.
+            </p>
+            <button id="zoomChinaBtn" class="page1-cta" type="button">
+              Zoom into China
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </aside>
+      </section>
+
+      <!-- ============================
+           PAGE 2 — China (placeholder)
+           ============================ -->
+      <section class="section section-page2">
+        <div class="page2-placeholder">
+          <span class="page2-tag">Coming Next</span>
+          <h2 class="page2-title">China: Urban Expansion in Detail</h2>
+          <p class="page2-subtitle">This section is under construction.</p>
         </div>
       </section>
     </div>
-    
+
+    <!-- Vendor JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.js"></script>
+
+    <!-- Project JS — order matters: modules first, then app entry -->
+    <script src="./assets/js/cover-canvas.js"></script>
     <script src="./assets/js/map-page1.js"></script>
     <script src="./assets/js/app.js"></script>
   </body>

@@ -48,7 +48,7 @@
           <div class="cover-nav-links">
             <a href="#cover" class="cover-nav-link active">Home</a>
             <a href="#page1" class="cover-nav-link">Global</a>
-            <a href="#" class="cover-nav-link">China</a>
+            <a href="#page2" class="cover-nav-link">China</a>
             <a href="#" class="cover-nav-link">Corridors</a>
             <a href="#" class="cover-nav-link">Layers</a>
             <a href="#" class="cover-nav-link">Hierarchies</a>
@@ -144,22 +144,46 @@
            PAGE 2 — China (placeholder)
            ============================ -->
       <section class="section section-page2">
-        <div class="page2-placeholder">
-          <span class="page2-tag">Coming Next</span>
-          <h2 class="page2-title">China: Urban Expansion in Detail</h2>
-          <p class="page2-subtitle">This section is under construction.</p>
-        </div>
-      </section>
+  <div class="page2-shell">
+    <div class="page2-header">
+      <span class="page2-tag">China Trend</span>
+      <h2 class="page2-title">China Nighttime Lights and GDP Trend</h2>
+      <p class="page2-subtitle">
+        National brightness growth, economic expansion, and key events from 2000 to 2024.
+      </p>
     </div>
 
-    <!-- Vendor JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.js"></script>
+    <div class="page2-content">
+      <div class="page2-chart-wrap">
+        <div id="page2Chart" class="page2-chart"></div>
+      </div>
 
-    <!-- Project JS — order matters: modules first, then app entry -->
-    <script src="./assets/js/cover-canvas.js"></script>
-    <script src="./assets/js/map-page1.js"></script>
-    <script src="./assets/js/app.js"></script>
+      <aside class="page2-event-panel">
+        <div class="page2-event-year" id="eventYear">2020</div>
+        <div class="page2-event-label" id="eventLabel">Highlighted Year</div>
+        <h3 class="page2-event-title" id="eventTitle">COVID-19 Pandemic Shock</h3>
+
+        <div class="page2-event-image-wrap">
+          <img id="eventImage" class="page2-event-image" src="" alt="Event image" />
+        </div>
+
+        <p class="page2-event-text" id="eventText">
+          Hover over the chart to explore the trend and annotated events.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+<!-- Vendor JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+
+<!-- Project JS -->
+<script src="./assets/js/cover-canvas.js"></script>
+<script src="./assets/js/map-page1.js"></script>
+<script src="./assets/js/page2-chart.js"></script>
+<script src="./assets/js/app.js"></script>
   </body>
 </html>

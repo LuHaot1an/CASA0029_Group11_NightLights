@@ -642,3 +642,118 @@ html, body {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+.section-page2 {
+  background: linear-gradient(180deg, #050913 0%, #0b1020 100%);
+  color: var(--text-main);
+}
+
+.page2-shell {
+  height: 100%;
+  padding: 3rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page2-header {
+  margin-bottom: 1.6rem;
+  max-width: 760px;
+}
+
+.page2-content {
+  display: grid;
+  grid-template-columns: 1.9fr 0.95fr;
+  gap: 1.4rem;
+  align-items: stretch;
+  min-height: 62vh;
+}
+
+.page2-chart-wrap,
+.page2-event-panel {
+  background: rgba(11, 19, 38, 0.72);
+  border: 1px solid rgba(132, 174, 255, 0.18);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+.page2-chart-wrap {
+  padding: 1rem 1rem 0.6rem;
+}
+
+.page2-chart {
+  width: 100%;
+  min-height: 540px;
+}
+
+.page2-event-panel {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.page2-event-year {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-warm);
+  margin-bottom: 0.4rem;
+}
+
+.page2-event-label {
+  display: inline-block;
+  width: fit-content;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+  background: rgba(255, 216, 77, 0.1);
+  border: 1px solid rgba(255, 216, 77, 0.2);
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.page2-event-title {
+  font-size: 1.08rem;
+  margin: 0 0 1rem;
+  line-height: 1.4;
+}
+
+.page2-event-image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  margin-bottom: 1rem;
+}
+
+.page2-event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.page2-event-text {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(245, 247, 250, 0.68);
+  margin: 0;
+}
+
+@media (max-width: 991px) {
+  .page2-shell {
+    padding: 1.5rem;
+  }
+
+  .page2-content {
+    grid-template-columns: 1fr;
+  }
+
+  .page2-chart {
+    min-height: 420px;
+  }
+}

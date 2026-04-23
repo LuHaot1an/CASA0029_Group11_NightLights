@@ -49,7 +49,7 @@
             <a href="#cover" class="cover-nav-link active">Home</a>
             <a href="#page1" class="cover-nav-link">Global</a>
             <a href="#page2" class="cover-nav-link">China</a>
-            <a href="#" class="cover-nav-link">Corridors</a>
+            <a href="#page3" class="cover-nav-link">Comparison</a>
             <a href="#" class="cover-nav-link">Layers</a>
             <a href="#" class="cover-nav-link">Hierarchies</a>
           </div>
@@ -141,7 +141,7 @@
       </section>
 
       <!-- ============================
-           PAGE 2 — China (placeholder)
+           PAGE 2 — China 
            ============================ -->
       <section class="section section-page2">
   <div class="page2-shell">
@@ -174,6 +174,169 @@
     </div>
   </div>
 </section>
+
+
+<!-- ============================
+     PAGE 3 — New Bright Areas and Urban Expansion
+     ============================ -->
+<section class="section section-page3">
+  <div class="page3-shell">
+    <div class="page3-header">
+      <div>
+        <span class="page3-tag">Bright Comparison</span>
+        <h2 class="page3-title">New & Stable Bright Areas and Urban Expansion in China</h2>
+      </div>
+      <p class="page3-subtitle">
+        Compare the national pattern, zoom into the PNG maps, and inspect
+        three key urban regions from 2014 to 2024.
+      </p>
+    </div>
+
+    <div class="page3-content">
+      <div class="page3-main-column">
+        <div class="page3-main-card">
+          <div class="page3-main-topbar">
+            <div class="page3-switch-group" aria-label="Switch map layer">
+              <button class="page3-switch-btn is-active" data-map="comparison" type="button">
+                Comparison
+              </button>
+              <button class="page3-switch-btn" data-map="new" type="button">
+                New Bright Areas
+              </button>
+              <button class="page3-switch-btn" data-map="stable" type="button">
+                Stable Bright Areas
+              </button>
+            </div>
+
+            <div class="page3-zoom-toolbar" aria-label="Map zoom controls">
+              <button id="page3ZoomOut" class="page3-zoom-btn" type="button" aria-label="Zoom out">−</button>
+              <span id="page3ZoomValue" class="page3-zoom-value">100%</span>
+              <button id="page3ZoomIn" class="page3-zoom-btn" type="button" aria-label="Zoom in">+</button>
+              <button id="page3ResetView" class="page3-reset-btn" type="button">Reset</button>
+            </div>
+          </div>
+
+          <div class="page3-map-viewport" id="page3MapViewport">
+            <div class="page3-map-panzoom" id="page3MapPanzoom">
+              <img
+                id="page3MainMap"
+                src="./assets/images/comparison_map.png"
+                alt="Comparison map of bright areas in China"
+              />
+            </div>
+          </div>
+
+          <div class="page3-map-footer">
+            <div>
+              <div id="page3MapTitle" class="page3-map-title">Comparison Map</div>
+              <div id="page3MapDesc" class="page3-map-desc">
+                New bright areas and stable bright areas shown together for 2014–2024.
+              </div>
+            </div>
+            <div class="page3-map-hint">Scroll to zoom · drag to pan · double-click to zoom</div>
+          </div>
+        </div>
+
+        <div class="page3-region-grid">
+          <button class="page3-region-card is-active" data-region="YRD" type="button">
+            <div class="page3-region-image-wrap">
+              <img src="./assets/images/YRD_map.png" alt="Yangtze River Delta map" class="page3-region-image" />
+            </div>
+            <div class="page3-region-copy">
+              <div class="page3-region-code">YRD</div>
+              <div class="page3-region-name">Yangtze River Delta</div>
+            </div>
+          </button>
+
+          <button class="page3-region-card" data-region="PRD" type="button">
+            <div class="page3-region-image-wrap">
+              <img src="./assets/images/PRD_map.png" alt="Pearl River Delta map" class="page3-region-image" />
+            </div>
+            <div class="page3-region-copy">
+              <div class="page3-region-code">PRD</div>
+              <div class="page3-region-name">Pearl River Delta</div>
+            </div>
+          </button>
+
+          <button class="page3-region-card" data-region="BTH" type="button">
+            <div class="page3-region-image-wrap">
+              <img src="./assets/images/BTH_map.png" alt="Beijing Tianjin Hebei map" class="page3-region-image" />
+            </div>
+            <div class="page3-region-copy">
+              <div class="page3-region-code">BTH</div>
+              <div class="page3-region-name">Beijing–Tianjin–Hebei</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <aside class="page3-side-column">
+        <div class="page3-side-card page3-legend-card">
+          <div class="page3-side-title">Legend</div>
+          <div class="page3-legend-list">
+            <div class="page3-legend-item"><span class="page3-swatch is-new"></span><span>New Bright Areas</span></div>
+            <div class="page3-legend-item"><span class="page3-swatch is-stable"></span><span>Stable Bright Areas</span></div>
+            <div class="page3-legend-item"><span class="page3-swatch is-nonbright"></span><span>Non-Bright Areas</span></div>
+          </div>
+          <div class="page3-data-note">Data · VIIRS Nighttime Lights, 2014 vs 2024</div>
+        </div>
+
+        <div class="page3-side-card page3-stats-card">
+          <div class="page3-side-title">Regional totals</div>
+          <div class="page3-stat-grid">
+            <div class="page3-stat-item">
+              <span class="page3-stat-label">Combined new bright area</span>
+              <strong id="page3TotalNew" class="page3-stat-value">--</strong>
+            </div>
+            <div class="page3-stat-item">
+              <span class="page3-stat-label">Combined stable bright area</span>
+              <strong id="page3TotalStable" class="page3-stat-value">--</strong>
+            </div>
+            <div class="page3-stat-item">
+              <span class="page3-stat-label">New / stable ratio</span>
+              <strong id="page3ExpansionRatio" class="page3-stat-value">--</strong>
+            </div>
+            <div class="page3-stat-item">
+              <span class="page3-stat-label">Leading region</span>
+              <strong id="page3LeadRegion" class="page3-stat-value">--</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="page3-side-card page3-chart-card">
+          <div class="page3-side-title">Area comparison by region</div>
+          <div id="page3BarChart" class="page3-chart"></div>
+        </div>
+
+        <div class="page3-side-card page3-region-detail-card">
+          <div class="page3-side-title">Focused regional reading</div>
+          <h3 id="page3RegionTitle" class="page3-region-detail-title">YRD · Yangtze River Delta</h3>
+          <p id="page3RegionSummary" class="page3-region-detail-text">
+            The Yangtze River Delta shows the largest absolute footprint of new bright areas,
+            with expansion spreading from the Shanghai core into a dense multi-city urban belt.
+          </p>
+          <div class="page3-detail-metrics">
+            <div>
+              <span>New bright areas</span>
+              <strong id="page3RegionNew">--</strong>
+            </div>
+            <div>
+              <span>Stable bright areas</span>
+              <strong id="page3RegionStable">--</strong>
+            </div>
+            <div>
+              <span>New as % of stable</span>
+              <strong id="page3RegionRatio">--</strong>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</div>
+
 <!-- Vendor JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
@@ -184,6 +347,7 @@
 <script src="./assets/js/cover-canvas.js"></script>
 <script src="./assets/js/map-page1.js"></script>
 <script src="./assets/js/page2-chart.js"></script>
+<script src="./assets/js/page3.js"></script>
 <script src="./assets/js/app.js"></script>
   </body>
 </html>

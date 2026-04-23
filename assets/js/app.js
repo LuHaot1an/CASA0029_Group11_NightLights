@@ -54,8 +54,10 @@
     fullpageApi = new window.fullpage("#fullpage", {
       autoScrolling: true,
       navigation: true,
-      anchors: ["cover", "page1", "page2"],
+      scrollOverflow: true,
+      anchors: ["cover", "page1", "page2","page3"],
       scrollingSpeed: 720,
+      normalScrollElements: ".page2-event-panel, .page3-map-viewport",
       licenseKey: "gplv3-license", // fullPage.js GPL mode for educational use
       async onLeave(origin, destination) {
         // Init and resize the map when scrolling into page 1

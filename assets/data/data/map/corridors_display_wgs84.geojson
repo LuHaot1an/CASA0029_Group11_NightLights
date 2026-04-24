@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "corridors_display_wgs84",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "fid": 1, "corridor_id": "GS", "corridor_nm": "Guangzhou-Shenzhen", "label_cn": "广深", "label_en": "Guangzhou–Shenzhen Corridor", "tp_type": "mixed" }, "geometry": { "type": "LineString", "coordinates": [ [ 113.257237526341569, 23.134250861446386 ], [ 113.572130495199332, 23.107826276647131 ], [ 113.748294393861059, 23.019744327316285 ], [ 113.922256243789462, 22.77091282045663 ], [ 114.056581216519007, 22.546303849662969 ], [ 114.241553310113815, 22.341513317468738 ] ] } },
+{ "type": "Feature", "properties": { "fid": 2, "corridor_id": "HNH", "corridor_nm": "Shanghai-Nanjing-Hangzhou", "label_cn": "沪宁杭", "label_en": "Shanghai–Nanjing–Hangzhou Corridor", "tp_type": "mixed" }, "geometry": { "type": "LineString", "coordinates": [ [ 118.806950846368437, 32.077871791627572 ], [ 119.837509653539414, 31.77839316390266 ], [ 120.581802125385082, 31.29834654004954 ], [ 121.4846421060263, 31.232285078051397 ], [ 120.194241548329416, 30.245767245545895 ], [ 120.590610320318191, 30.051986957018013 ], [ 121.621169127489154, 29.86701486342324 ] ] } },
+{ "type": "Feature", "properties": { "fid": 3, "corridor_id": "KG", "corridor_nm": "Beijing-Guangzhou", "label_cn": "京广", "label_en": "Beijing–Guangzhou Corridor", "tp_type": "mixed" }, "geometry": { "type": "LineString", "coordinates": [ [ 116.748035280759908, 39.881932502340874 ], [ 114.545986547488653, 38.014595176526861 ], [ 114.466712793090892, 36.411503698705395 ], [ 113.638742469380915, 34.755563051285407 ], [ 114.290548894429193, 30.606903237802406 ], [ 113.110250773395805, 29.334119069971628 ], [ 112.942895069667188, 28.215478313469834 ], [ 112.586163174877271, 26.916269560839783 ], [ 113.599105592182056, 24.793494581966307 ], [ 113.258889062891583, 23.133149837079774 ] ] } },
+{ "type": "Feature", "properties": { "fid": 4, "corridor_id": "CY", "corridor_nm": "Chengdu-Chongqing", "label_cn": "成渝", "label_en": "Chengdu–Chongqing Corridor", "tp_type": "mixed" }, "geometry": { "type": "LineString", "coordinates": [ [ 104.062032528384236, 30.585983774836304 ], [ 105.048550360889749, 29.55542496766537 ], [ 106.537135304581113, 29.573041357531533 ] ] } }
+]
+}

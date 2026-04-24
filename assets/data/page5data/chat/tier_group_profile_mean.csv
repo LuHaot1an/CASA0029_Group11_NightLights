@@ -1,0 +1,4 @@
+tier_group,tier_label,growth_intensity_mean,growth_efficiency_mean,coordination_index_mean,support_index_mean
+T1,Super-tier Cities,0.7212,10.7439,0.4364,5.6474
+T2,Second-tier Cities,0.8556,9.326,0.41,4.3918
+T3,Third-tier Cities,1.1363,5.2698,0.2776,1.8357

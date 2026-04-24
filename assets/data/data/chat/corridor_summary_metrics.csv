@@ -1,0 +1,5 @@
+corridor_id,corridor_nm,gdp_2012,gdp_2022,gdp_total_growth,gdp_growth_rate,population_2012,population_2022,population_total_growth,population_growth_rate,ntl_2012,ntl_2022,ntl_total_growth,ntl_growth_rate
+CY,Chengdu-Chongqing,"215628476","519675423","304046947",141.01,"5449.2","5718",268.8,4.93,"49705","167984","118279",237.96
+GS,Guangzhou-Shenzhen,"318811600","726894300","408082700",128,"1296.9","1985",688.1,53.06,"151511","291041","139530",92.09
+HNH,Shanghai-Nanjing-Hangzhou,"734818619","1622407788","887589169",120.79,"5611.6","6215",603.4,10.75,"303262","695607","392345",129.37
+KG,Beijing-Guangzhou,"642018668","1418429644","776410976",120.93,"13893.5","14528",634.5,4.57,"226563","661494","434931",191.97

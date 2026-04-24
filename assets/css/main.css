@@ -1295,3 +1295,963 @@ html, body {
     padding-inline: 0.85rem;
   }
 }
+
+/* =========================================================
+   PAGE 4 — TRANSPORT CORRIDORS & URBAN EXPANSION
+   Scoped with page4- prefix; inherits design tokens from main.css
+   ========================================================= */
+.section-page4 {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(93, 113, 168, 0.12), transparent 26%),
+    radial-gradient(circle at 75% 20%, rgba(255, 190, 60, 0.06), transparent 22%),
+    linear-gradient(180deg, #050a12 0%, #08111d 100%);
+}
+
+.page4-shell {
+  max-width: 1680px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 0.8rem 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  color: var(--text-main);
+}
+
+.page4-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.7fr);
+  align-items: end;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.page4-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--accent-warm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page4-title {
+  margin: 0.2rem 0 0;
+  font-size: clamp(1.6rem, 2.1vw, 2.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.page4-subtitle {
+  max-width: 26rem;
+  margin: 0;
+  color: rgba(219, 227, 240, 0.86);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+/* ─── Upper row: map + side panel ─── */
+.page4-upper {
+  height: 58vh;
+  min-height: 420px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(340px, 0.85fr);
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.page4-map-card {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(10, 17, 28, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 46px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+}
+
+.page4-map-container {
+  width: 100%;
+  height: 100%;
+}
+
+.page4-corridor-btns {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.page4-corridor-btn {
+  appearance: none;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(8, 14, 30, 0.82);
+  color: rgba(219, 227, 240, 0.85);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.page4-corridor-btn:hover {
+  background: rgba(8, 14, 30, 0.95);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.page4-corridor-btn.is-active {
+  background: rgba(255, 216, 77, 0.12);
+  border-color: rgba(255, 216, 77, 0.35);
+  color: #fff;
+}
+
+.page4-cbtn-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.page4-map-tooltip {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  background: rgba(8, 14, 30, 0.92);
+  border: 1px solid rgba(255, 190, 60, 0.35);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: var(--text-main);
+  backdrop-filter: blur(6px);
+  min-width: 160px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+.page4-map-tooltip strong {
+  display: block;
+  font-size: 0.84rem;
+  color: var(--accent-warm);
+  margin-bottom: 2px;
+}
+
+.page4-map-tooltip .tt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.page4-map-tooltip .tt-row:last-child { border-bottom: none; }
+.page4-map-tooltip .tt-row span:first-child { color: var(--text-muted); }
+.page4-map-tooltip .tt-row span:last-child { font-weight: 600; color: var(--accent-warm); }
+
+/* ─── Side panel ─── */
+.page4-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 0;
+}
+
+.page4-controls {
+  border-radius: 18px;
+  background: rgba(10, 17, 28, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(16px);
+  padding: 0.7rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+
+.page4-control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.page4-control-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(219, 227, 240, 0.6);
+  min-width: 62px;
+  flex-shrink: 0;
+}
+
+.page4-switch-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.page4-switch-btn {
+  appearance: none;
+  font-family: inherit;
+  padding: 0.4rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #dbe3f0;
+  cursor: pointer;
+  transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+}
+
+.page4-switch-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.page4-switch-btn.is-active {
+  background: linear-gradient(135deg, rgba(255, 190, 60, 0.18), rgba(255, 216, 77, 0.18));
+  border-color: rgba(255, 216, 77, 0.28);
+  color: #ffffff;
+}
+
+.page4-switch-btn.is-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.page4-bar-wrap {
+  flex: 1;
+  min-height: 0;
+  border-radius: 18px;
+  background: rgba(10, 17, 28, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 46px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+  padding: 0.5rem 0.4rem 0.6rem;
+}
+
+.page4-bar-chart {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+}
+
+.page4-insight-box {
+  border-radius: 14px;
+  background: rgba(10, 17, 28, 0.78);
+  border: 1px solid rgba(255, 216, 77, 0.12);
+  padding: 0.65rem 0.8rem;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: rgba(219, 227, 240, 0.82);
+  flex-shrink: 0;
+}
+
+/* ─── Bottom panel ─── */
+.page4-bottom-panel {
+  flex-shrink: 0;
+  height: 420px;
+  border-radius: 18px;
+  background: rgba(10, 17, 28, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page4-bottom-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+  gap: 0.8rem;
+}
+
+.page4-bottom-corridor-label {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.page4-line-chart {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  padding: 0.3rem 0.4rem 0;
+}
+
+@media (max-width: 1280px) {
+  .page4-shell { padding-inline: 1rem; }
+  .page4-upper { grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.9fr); }
+}
+
+@media (max-width: 1024px) {
+  .page4-shell { padding-top: 2rem; padding-bottom: 1.5rem; }
+  .page4-header { grid-template-columns: 1fr; }
+  .page4-upper { grid-template-columns: 1fr; height: auto; }
+  .page4-map-card { min-height: 50vh; }
+  .page4-bottom-panel { height: 350px; }
+}
+
+/* =========================================================
+   PAGE 5 — CITY HIERARCHY, GROWTH COORDINATION & SUPPORT
+   Scoped with page5- prefix; inherits design tokens from :root
+   ========================================================= */
+/* PAGE 5 START */
+.section-page5 {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 25% 20%, rgba(93, 113, 168, 0.14), transparent 25%),
+    radial-gradient(circle at 80% 25%, rgba(78, 205, 196, 0.08), transparent 22%),
+    linear-gradient(180deg, #050a12 0%, #08111d 100%);
+}
+
+.page5-shell {
+  max-width: 1680px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 0.8rem 1.4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  color: var(--text-main);
+}
+
+.page5-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.7fr);
+  align-items: end;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.page5-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--accent-warm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page5-title {
+  margin: 0.2rem 0 0;
+  font-size: clamp(1.6rem, 2.1vw, 2.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.page5-subtitle {
+  max-width: 26rem;
+  margin: 0;
+  color: rgba(219, 227, 240, 0.86);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.page5-content {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.38fr) minmax(360px, 1fr);
+  gap: 0.8rem;
+}
+
+/* ─── Map card with three-layer swipe compare ─── */
+.page5-map-card {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(10, 17, 28, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 46px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+}
+
+.page5-map-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.page5-map-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#page5MapT3 { z-index: 0; }
+#page5MapT2 { z-index: 1; }
+#page5MapT1 { z-index: 2; }
+
+/* ─── Draggable dividers ─── */
+.page5-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  z-index: 5;
+  cursor: ew-resize;
+  transform: translateX(-50%);
+  touch-action: none;
+}
+
+.page5-divider::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 4px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+
+.page5-divider-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  color: #333;
+  pointer-events: none;
+}
+
+.page5-divider-grip svg { display: block; }
+
+/* ─── Tier labels ─── */
+.page5-tier-label {
+  position: absolute;
+  top: 10px;
+  z-index: 4;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(8, 14, 30, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+/* ─── Search box ─── */
+.page5-search-wrap {
+  position: absolute;
+  top: 44px;
+  left: 10px;
+  z-index: 6;
+  width: 210px;
+}
+
+.page5-search-input {
+  width: 100%;
+  padding: 7px 10px 7px 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(8, 14, 30, 0.88);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.78rem;
+  outline: none;
+  backdrop-filter: blur(6px);
+  transition: border-color 0.2s;
+}
+
+.page5-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 9px;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  color: rgba(219, 227, 240, 0.45);
+}
+
+.page5-search-input::placeholder { color: rgba(219, 227, 240, 0.4); }
+.page5-search-input:focus { border-color: rgba(255, 216, 77, 0.4); }
+
+.page5-search-results {
+  display: none;
+  margin-top: 4px;
+  border-radius: 8px;
+  background: rgba(8, 14, 30, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  max-height: 240px;
+  overflow-y: auto;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.page5-search-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 10px;
+  cursor: pointer;
+  font-size: 0.76rem;
+  color: var(--text-main);
+  transition: background 0.15s;
+}
+
+.page5-search-item:hover { background: rgba(255, 216, 77, 0.1); }
+.page5-search-tier { color: var(--text-muted); font-size: 0.68rem; }
+.page5-search-empty { padding: 8px 10px; color: var(--text-muted); font-size: 0.74rem; }
+
+/* ─── Zoom controls ─── */
+.page5-nav-ctrl {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 216, 77, 0.2);
+}
+
+.page5-nav-btn {
+  appearance: none;
+  font-family: inherit;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: rgba(8, 20, 43, 0.78);
+  color: var(--text-main);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.page5-nav-btn:hover { background: rgba(8, 20, 43, 0.95); }
+
+/* ─── Map tooltip (lightweight) ─── */
+.page5-map-tooltip {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  background: rgba(8, 14, 30, 0.92);
+  border: 1px solid rgba(255, 190, 60, 0.35);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--text-main);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+}
+
+.page5-map-tooltip strong {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--accent-warm);
+}
+
+.page5-tip-tier {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+/* ─── Map legend ─── */
+.page5-map-legend {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 4;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(8, 14, 30, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  font-size: 0.68rem;
+  color: rgba(219, 227, 240, 0.7);
+  line-height: 1.7;
+}
+
+.page5-legend-title {
+  font-weight: 700;
+  color: rgba(219, 227, 240, 0.9);
+  margin-bottom: 3px;
+  letter-spacing: 0.04em;
+}
+
+.page5-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page5-legend-gradient {
+  display: inline-block;
+  width: 40px;
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #4a9eff, #4ecdc4, #7ae582, #ffd84d);
+  flex-shrink: 0;
+}
+
+/* ─── Right column (trajectory on top, comparison + radar on bottom row) ─── */
+.page5-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-height: 0;
+}
+
+.page5-bottom-row {
+  display: flex;
+  gap: 0.55rem;
+  min-height: 0;
+  flex: 1;
+}
+
+.page5-trajectory-card,
+.page5-comparison-card,
+.page5-radar-card {
+  border-radius: 18px;
+  background: rgba(10, 17, 28, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.page5-trajectory-card { flex: 1; }
+.page5-comparison-card { flex: 1.2; }
+.page5-radar-card { flex: 0.8; }
+
+.page5-card-title {
+  padding: 0.5rem 0.85rem 0.35rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.page5-trajectory-chart,
+.page5-comparison-chart {
+  flex: 1;
+  min-height: 150px;
+  width: 100%;
+  padding: 0.2rem 0.4rem 0;
+}
+
+.page5-radar-chart {
+  flex: 1;
+  min-height: 120px;
+  width: 100%;
+  padding: 0;
+}
+
+/* ─── PAGE 5 responsive ─── */
+@media (max-width: 1280px) {
+  .page5-shell { padding-inline: 1rem; }
+  .page5-content { grid-template-columns: minmax(0, 1.2fr) minmax(320px, 1fr); }
+}
+
+@media (max-width: 1024px) {
+  .page5-shell { padding-top: 2rem; padding-bottom: 1.5rem; }
+  .page5-header { grid-template-columns: 1fr; }
+  .page5-content { grid-template-columns: 1fr; }
+  .page5-map-card { min-height: 50vh; }
+  .page5-bottom-row { flex-direction: column; }
+}
+/* PAGE 5 END */
+
+/* =========================================================
+   OUR TEAM PAGE START
+   Credit / closing page — visual language inherits from cover
+   ========================================================= */
+.section-team {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(165deg, #05070b 0%, #0a0e1a 40%, #0b1020 100%);
+  overflow: hidden;
+}
+
+.section-team > .fp-overflow,
+.section-team > .fp-overflow > .fp-overflow-x {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+#teamCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.team-content {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 5vw;
+  gap: 2.8rem;
+  animation: fadeUp 0.9s ease both;
+}
+
+/* ─── Header ─── */
+.team-header {
+  text-align: center;
+}
+
+.team-eyebrow {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+  background: rgba(255, 216, 77, 0.1);
+  border: 1px solid rgba(255, 216, 77, 0.2);
+  border-radius: 4px;
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.team-title {
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.6rem;
+  letter-spacing: -0.015em;
+  color: var(--text-main);
+}
+
+.team-subtitle {
+  font-size: 1rem;
+  color: rgba(245, 247, 250, 0.5);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ─── Cards container ─── */
+.team-cards {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 960px;
+}
+
+/* ─── Individual card ─── */
+.team-card {
+  flex: 0 1 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.6rem 1.8rem;
+  border-radius: 16px;
+  background: rgba(11, 19, 38, 0.65);
+  border: 1px solid rgba(255, 210, 80, 0.1);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 24px rgba(255, 216, 77, 0.08);
+  border-color: rgba(255, 210, 80, 0.25);
+}
+
+/* ─── Avatar ─── */
+.team-avatar-wrap {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 216, 77, 0.25);
+  box-shadow: 0 0 20px rgba(255, 216, 77, 0.1);
+  margin-bottom: 1.2rem;
+  flex-shrink: 0;
+}
+
+.team-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── Name & role ─── */
+.team-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.01em;
+}
+
+.team-role {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--accent-warm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* ─── Contact links ─── */
+.team-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.team-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  color: rgba(245, 247, 250, 0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+  word-break: break-all;
+}
+
+.team-link:hover {
+  color: var(--accent-warm);
+}
+
+.team-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.team-link:hover .team-icon {
+  opacity: 1;
+}
+
+/* ─── Footer ─── */
+.team-footer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.team-footer-line {
+  font-size: 0.78rem;
+  color: rgba(245, 247, 250, 0.4);
+  letter-spacing: 0.02em;
+}
+
+.team-footer-names {
+  font-size: 0.82rem;
+  color: rgba(245, 247, 250, 0.55);
+  font-weight: 500;
+}
+
+.team-footer-inst {
+  font-size: 0.74rem;
+  color: rgba(245, 247, 250, 0.35);
+}
+
+.team-footer-inst a {
+  color: var(--accent-warm);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.team-footer-inst a:hover {
+  color: var(--accent-orange);
+  text-decoration: underline;
+}
+
+/* ─── Team page responsive ─── */
+@media (max-width: 991px) {
+  .team-content {
+    padding: 2rem 1.5rem;
+    gap: 2rem;
+  }
+  .team-cards {
+    gap: 1.2rem;
+  }
+  .team-card {
+    flex: 0 1 240px;
+  }
+}
+
+@media (max-width: 640px) {
+  .team-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .team-card {
+    flex: none;
+    width: 100%;
+    max-width: 300px;
+  }
+  .team-title {
+    font-size: 1.8rem;
+  }
+}
+/* OUR TEAM PAGE END */

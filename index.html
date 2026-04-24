@@ -50,8 +50,11 @@
             <a href="#page1" class="cover-nav-link">Global</a>
             <a href="#page2" class="cover-nav-link">China</a>
             <a href="#page3" class="cover-nav-link">Comparison</a>
-            <a href="#" class="cover-nav-link">Layers</a>
-            <a href="#" class="cover-nav-link">Hierarchies</a>
+            <a href="#page4" class="cover-nav-link">Transport Corridor</a>
+            <a href="#page5" class="cover-nav-link">City Hierarchy</a>
+            <!-- OUR TEAM NAV LINK START -->
+            <a href="#team" class="cover-nav-link">Our Team</a>
+            <!-- OUR TEAM NAV LINK END -->
           </div>
         </nav>
 
@@ -335,6 +338,274 @@
   </div>
 </section>
 
+<!-- ============================
+     PAGE 4 — Transport Corridors and Urban Expansion
+     ============================ -->
+<section class="section section-page4">
+  <div class="page4-shell">
+    <div class="page4-header">
+      <div>
+        <span class="page4-tag">Corridor Analysis</span>
+        <h2 class="page4-title">Transport Corridors and Urban Expansion</h2>
+      </div>
+      <p class="page4-subtitle">
+        Explore how major transport corridors shape city growth patterns across China, 2012–2022.
+      </p>
+    </div>
+
+    <div class="page4-upper">
+      <!-- A. Left map panel -->
+      <div class="page4-map-card">
+        <div id="page4Map" class="page4-map-container"></div>
+        <div id="page4MapTooltip" class="page4-map-tooltip"></div>
+        <div class="page4-corridor-btns" id="page4CorridorBtns">
+          <button class="page4-corridor-btn" data-cid="KG" type="button">
+            <span class="page4-cbtn-dot" style="background:#ff6b6b"></span>Beijing–Guangzhou
+          </button>
+          <button class="page4-corridor-btn" data-cid="HNH" type="button">
+            <span class="page4-cbtn-dot" style="background:#4ecdc4"></span>Shanghai–Nanjing–Hangzhou
+          </button>
+          <button class="page4-corridor-btn" data-cid="GS" type="button">
+            <span class="page4-cbtn-dot" style="background:#ffe66d"></span>Guangzhou–Shenzhen
+          </button>
+          <button class="page4-corridor-btn" data-cid="CY" type="button">
+            <span class="page4-cbtn-dot" style="background:#a29bfe"></span>Chengdu–Chongqing
+          </button>
+        </div>
+      </div>
+
+      <!-- B. Right side panel -->
+      <aside class="page4-side-panel">
+        <div class="page4-controls">
+          <div class="page4-control-group">
+            <label class="page4-control-label">Indicator</label>
+            <div class="page4-switch-group" id="page4IndicatorSwitch">
+              <button class="page4-switch-btn is-active" data-indicator="ntl" type="button">Night Light</button>
+              <button class="page4-switch-btn" data-indicator="population" type="button">Population</button>
+              <button class="page4-switch-btn" data-indicator="gdp" type="button">GDP</button>
+            </div>
+          </div>
+          <div class="page4-control-group">
+            <label class="page4-control-label">Compare</label>
+            <div class="page4-switch-group" id="page4ModeSwitch">
+              <button class="page4-switch-btn is-active" data-mode="total" type="button">Total</button>
+              <button class="page4-switch-btn" data-mode="rate" type="button">Growth Rate</button>
+              <button class="page4-switch-btn" data-mode="structure" type="button">Structure</button>
+            </div>
+          </div>
+        </div>
+        <div class="page4-bar-wrap">
+          <div id="page4BarChart" class="page4-bar-chart"></div>
+        </div>
+        <div class="page4-insight-box" id="page4InsightBox">
+          Select a corridor to see insights.
+        </div>
+      </aside>
+    </div>
+
+    <!-- C. Bottom line chart -->
+    <div class="page4-bottom-panel">
+      <div class="page4-bottom-topbar">
+        <div class="page4-switch-group" id="page4BottomModeSwitch">
+          <button class="page4-switch-btn is-active" data-bmode="indicators" type="button">Indicators View</button>
+          <button class="page4-switch-btn" data-bmode="cities" type="button">Cities Along Corridor View</button>
+        </div>
+        <div class="page4-bottom-corridor-label" id="page4BottomLabel">Current Corridor: --</div>
+      </div>
+      <div id="page4LineChart" class="page4-line-chart"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+     PAGE 5 — City Hierarchy, Growth Coordination & Support
+     ============================ -->
+<!-- PAGE 5 START -->
+<section class="section section-page5">
+  <div class="page5-shell">
+    <div class="page5-header">
+      <div>
+        <span class="page5-tag">Hierarchy Analysis</span>
+        <h2 class="page5-title">City Hierarchy, Growth Coordination & Functional Support</h2>
+      </div>
+      <p class="page5-subtitle">
+        Drag the dividers to compare T1, T2 and T3 city tiers. Click any city for details.
+      </p>
+    </div>
+
+    <div class="page5-content">
+      <!-- A. Left: three-layer swipe-compare map -->
+      <div class="page5-map-card">
+        <div class="page5-map-area" id="page5MapArea">
+          <!-- Map layers: T3 bottom, T2 middle, T1 top -->
+          <div id="page5MapT3" class="page5-map-layer"></div>
+          <div id="page5MapT2" class="page5-map-layer"></div>
+          <div id="page5MapT1" class="page5-map-layer"></div>
+
+          <!-- Draggable dividers -->
+          <div class="page5-divider" id="page5Div1">
+            <div class="page5-divider-grip">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M6 9l3-4v8l-3-4z" fill="currentColor"/><path d="M12 9l-3-4v8l3-4z" fill="currentColor"/>
+              </svg>
+            </div>
+          </div>
+          <div class="page5-divider" id="page5Div2">
+            <div class="page5-divider-grip">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M6 9l3-4v8l-3-4z" fill="currentColor"/><path d="M12 9l-3-4v8l3-4z" fill="currentColor"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Tier labels -->
+          <div class="page5-tier-label" id="page5LabelT1">Tier 1 · Super-tier Cities</div>
+          <div class="page5-tier-label" id="page5LabelT2">Tier 2 · Second-tier Cities</div>
+          <div class="page5-tier-label" id="page5LabelT3">Tier 3 · Third-tier Cities</div>
+
+          <!-- Search -->
+          <div class="page5-search-wrap">
+            <svg class="page5-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="page5SearchInput" class="page5-search-input" placeholder="Search city..." autocomplete="off" />
+            <div id="page5SearchResults" class="page5-search-results"></div>
+          </div>
+
+          <!-- Zoom controls -->
+          <div class="page5-nav-ctrl">
+            <button type="button" id="page5ZoomIn" class="page5-nav-btn" aria-label="Zoom in">+</button>
+            <button type="button" id="page5ZoomOut" class="page5-nav-btn" aria-label="Zoom out">&minus;</button>
+          </div>
+
+          <!-- Tooltip -->
+          <div id="page5MapTooltip" class="page5-map-tooltip"></div>
+
+          <!-- Legend -->
+          <div class="page5-map-legend">
+            <div class="page5-legend-title">Visual Encoding</div>
+            <div class="page5-legend-item">
+              <svg width="10" height="10"><circle cx="5" cy="5" r="3" fill="#4ecdc4"/></svg>
+              <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#4ecdc4"/></svg>
+              Size = Growth Intensity
+            </div>
+            <div class="page5-legend-item">
+              <span class="page5-legend-gradient"></span>
+              Color = Coordination
+            </div>
+            <div class="page5-legend-item">
+              <svg width="12" height="12"><circle cx="6" cy="6" r="4" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"/></svg>
+              Ring = Growth Efficiency
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B. Right side column -->
+      <div class="page5-right-column">
+        <div class="page5-trajectory-card">
+          <div class="page5-card-title" id="page5TrajectoryTitle">Beijing · Super-tier Cities</div>
+          <div id="page5TrajectoryChart" class="page5-trajectory-chart"></div>
+        </div>
+
+        <div class="page5-bottom-row">
+          <div class="page5-comparison-card">
+            <div class="page5-card-title" id="page5ComparisonTitle">City vs Tier Mean</div>
+            <div id="page5ComparisonChart" class="page5-comparison-chart"></div>
+          </div>
+
+          <div class="page5-radar-card">
+            <div class="page5-card-title" id="page5RadarTitle">POI Distribution</div>
+            <div id="page5RadarChart" class="page5-radar-chart"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- PAGE 5 END -->
+
+<!-- ============================
+     OUR TEAM PAGE START
+     ============================ -->
+<section class="section section-team">
+  <canvas id="teamCanvas"></canvas>
+  <div class="cover-grid-overlay"></div>
+  <div class="cover-noise-overlay"></div>
+
+  <div class="team-content">
+    <div class="team-header">
+      <span class="team-eyebrow">Credits</span>
+      <h2 class="team-title">Our Creative Team</h2>
+      <p class="team-subtitle">The people behind the pixels, data, and stories.</p>
+    </div>
+
+    <div class="team-cards">
+      <div class="team-card">
+        <div class="team-avatar-wrap">
+          <img src="./assets/photo/Haotian Lu.JPG" alt="Haotian Lu" class="team-avatar" />
+        </div>
+        <h3 class="team-name">Haotian Lu</h3>
+        <span class="team-role">Co-Producer</span>
+        <div class="team-links">
+          <a href="mailto:ucfnlub@ucl.ac.uk" class="team-link">
+            <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            ucfnlub@ucl.ac.uk
+          </a>
+          <a href="https://github.com/LuHaot1an" target="_blank" rel="noopener" class="team-link">
+            <svg class="team-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            @LuHaot1an
+          </a>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar-wrap">
+          <img src="./assets/photo/Zhaochen Yi.JPG" alt="Chenyi Zhao" class="team-avatar" />
+        </div>
+        <h3 class="team-name">Chenyi Zhao</h3>
+        <span class="team-role">Co-Producer</span>
+        <div class="team-links">
+          <a href="mailto:ucfncz1@ucl.ac.uk" class="team-link">
+            <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            ucfncz1@ucl.ac.uk
+          </a>
+          <a href="https://github.com/CHENYIZHAO1203" target="_blank" rel="noopener" class="team-link">
+            <svg class="team-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            @CHENYIZHAO1203
+          </a>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar-wrap">
+          <img src="./assets/photo/Jiayi Cheng.jpg" alt="Jiayi Cheng" class="team-avatar" />
+        </div>
+        <h3 class="team-name">Jiayi Cheng</h3>
+        <span class="team-role">Co-Producer</span>
+        <div class="team-links">
+          <a href="mailto:ucfnjc4@ucl.ac.uk" class="team-link">
+            <svg class="team-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            ucfnjc4@ucl.ac.uk
+          </a>
+          <a href="https://github.com/JiayiCheng-UCL" target="_blank" rel="noopener" class="team-link">
+            <svg class="team-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            @JiayiCheng-UCL
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="team-footer">
+      <div class="team-footer-line">&copy; 2026 Urban Analysis &mdash; Night-time Lights</div>
+      <div class="team-footer-names">Haotian Lu, Chenyi Zhao, Jiayi Cheng</div>
+      <div class="team-footer-inst">
+        <a href="https://www.ucl.ac.uk" target="_blank" rel="noopener">University College London</a>,
+        <a href="https://www.ucl.ac.uk/bartlett/casa/" target="_blank" rel="noopener">The Bartlett Centre for Advanced Spatial Analysis</a>
+      </div>
+    </footer>
+  </div>
+</section>
+<!-- OUR TEAM PAGE END -->
+
 </div>
 
 <!-- Vendor JS -->
@@ -349,5 +620,15 @@
 <script src="./assets/js/page2-chart.js"></script>
 <script src="./assets/js/page3.js"></script>
 <script src="./assets/js/app.js"></script>
+
+<!-- Page 4 JS -->
+<script src="./assets/js/js/page4.js"></script>
+
+<!-- Page 5 JS -->
+<script src="./assets/js/js/page5.js"></script>
+
+<!-- OUR TEAM PAGE START -->
+<script src="./assets/js/team-canvas.js"></script>
+<!-- OUR TEAM PAGE END -->
   </body>
 </html>

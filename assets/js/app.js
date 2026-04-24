@@ -55,7 +55,9 @@
       autoScrolling: true,
       navigation: true,
       scrollOverflow: true,
-      anchors: ["cover", "page1", "page2","page3"],
+      // OUR TEAM PAGE START — added "team" anchor
+      anchors: ["cover", "page1", "page2", "page3", "page4", "page5", "team"],
+      // OUR TEAM PAGE END
       scrollingSpeed: 720,
       normalScrollElements: ".page2-event-panel, .page3-map-viewport",
       licenseKey: "gplv3-license", // fullPage.js GPL mode for educational use

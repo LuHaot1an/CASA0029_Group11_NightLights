@@ -1,7 +1,5 @@
 # Project Methodology Summary
 
-## Urban Expansion Imbalance seen from the perspective of night-time lights
-
 An interactive web visualization exploring **spatial inequality in urban growth** through nighttime light imagery, spanning **2000–2024** and scaling from **global patterns** down to **Chinese city-level dynamics**.
 
 👉 **[Check out the webpage!](https://LuHaot1an.github.io/CASA0029_Group11_NightLights/)**
@@ -11,7 +9,7 @@ An interactive web visualization exploring **spatial inequality in urban growth*
 ### Data Sources
 
 | Dataset                    | Period    | Format | Source                                                                                                                                                                                       |
-|:---------------------------|:----------|:-------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:--------------------------:|:---------:|:------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 | Nighttime light composite  | 2000–2024 | `.tif` | Chen Z., Yu B. et al. *An Extended Time Series (2000–2018) of Global NPP-VIIRS-Like Nighttime Light Data from a Cross-Sensor Calibration.* Earth System Science Data, 2021, 13(3): 889–906 |
 | Population grid            | 2000–2024 | `.tif` | [ORNL LandScan](https://landscan.ornl.gov)                                                                                                                                                  |
 | GDP statistics             | 2000–2024 | `.csv` | [Chinese Government Statistical Yearbook](https://data.stats.gov.cn/dg/website/page.html#/pc/national/fsYearData)                                                                                                                                                      |

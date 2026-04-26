@@ -35,7 +35,6 @@ This same pipeline is applied consistently across all TIFFs.
 
 ---
 
----
 ## Technical Stack
 
 This project was developed as a static web-based urban data visualisation website. It uses front-end web technologies and open-source visualisation libraries to present night-time light data, interactive maps, charts, and narrative sections.

@@ -61,13 +61,14 @@ Overall, this project was developed as a lightweight static website using HTML, 
 
 ## Page-based Methodology and Visualisation Workflow
 
+
 ### Page 1: Global Night-time Light Overview
 
-Page 1 was created from global night-time light raster data. The raster layer was first checked in GIS software to confirm its coordinate reference system and spatial coverage. To make it suitable for web display, the raster was clipped or prepared to the required global extent and compressed into a web-friendly format. The purpose of this page was not to calculate derived indicators, but to establish night-time light as a visual proxy for urban activity, infrastructure concentration, and uneven settlement intensity. The processed raster was used as the main visual layer, allowing users to observe the global distribution of bright urban regions before moving into more detailed China-based analysis.
+Page 1 was created from global night-time light raster data. The raster was checked for coordinate reference system and spatial coverage, then prepared in a web-friendly format for display. This page does not calculate derived indicators; instead, it introduces night-time light as a proxy for urban activity, infrastructure concentration, and uneven settlement intensity. The processed raster layer provides a global overview before the project narrows to China-based analysis.
 
 ### Page 2: China Night-time Light and GDP Trend
 
-Page 2 combines annual night-time light data with China’s GDP data to compare changes in urban brightness and economic growth over time. The GDP dataset was cleaned into a year-based table, while the night-time light data were organised by year so that both datasets could be compared consistently. The visualisation links the temporal pattern of national GDP growth with changes in night-time light intensity. This page therefore helps establish night-time light as an analytical indicator for urban and economic change, rather than only a visual background layer.
+Page 2 compares China’s annual night-time light change with GDP trends. GDP data were cleaned into a year-based table, while night-time light layers were organised by year for consistent temporal comparison. The visualisation links economic growth with changing brightness intensity, helping establish night-time light as an analytical indicator of urban and economic change.
 
 ### Page 3: New and Stable Bright Areas
 

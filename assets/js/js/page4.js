@@ -49,10 +49,10 @@
   };
 
   const CORRIDOR_DISPLAY_LABELS = {
-    CY: 'CC',
-    GS: 'GS',
-    HNH: 'SNH',
-    KG: 'BG'
+    CY: 'C-C',
+    GS: 'G-S',
+    HNH: 'S-N-H',
+    KG: 'B-G'
   };
 
   function corridorDisplayLabel(cid) {
@@ -384,8 +384,7 @@
     page4Map.on('mousemove', 'corridors-line', (e) => {
       if (e.features && e.features.length) {
         const p = e.features[0].properties;
-        tooltip.innerHTML = '<strong>' + p.corridor_nm + '</strong>'
-          + '<div class="tt-row"><span>ID</span><span>' + p.corridor_id + '</span></div>';
+        tooltip.innerHTML = '<strong>' + p.corridor_nm + '</strong>';
         tooltip.style.display = 'block';
         tooltip.style.left = (e.point.x + 14) + 'px';
         tooltip.style.top = (e.point.y + 14) + 'px';
@@ -584,7 +583,16 @@
           trigger: 'axis',
           backgroundColor: 'rgba(8,14,30,0.92)',
           borderColor: 'rgba(255,190,60,0.35)',
-          textStyle: { color: '#f5f7fa', fontSize: 12 }
+          textStyle: { color: '#f5f7fa', fontSize: 12 },
+          formatter: function(params) {
+            var cid = params[0].axisValue;
+            var label = corridorDisplayLabel(cid);
+            var html = '<strong>' + label + '</strong>';
+            params.forEach(function(p) {
+              html += '<br/>' + p.marker + ' ' + (typeof p.value === 'number' ? p.value.toLocaleString() : p.value);
+            });
+            return html;
+          }
         },
         grid: { left: 12, right: 20, top: 40, bottom: 44, containLabel: true },
         xAxis: {
@@ -628,10 +636,24 @@
           trigger: 'axis',
           backgroundColor: 'rgba(8,14,30,0.92)',
           borderColor: 'rgba(255,190,60,0.35)',
-          textStyle: { color: '#f5f7fa', fontSize: 12 }
+          textStyle: { color: '#f5f7fa', fontSize: 12 },
+          formatter: function(params) {
+            var cid = params[0].axisValue;
+            var label = corridorDisplayLabel(cid);
+            var html = '<strong>' + label + '</strong>';
+            params.forEach(function(p) {
+              if (p.seriesName === 'peripheral') return;
+              html += '<br/>' + p.marker + ' ' + p.seriesName + ': ' + (typeof p.value === 'number' ? p.value.toLocaleString() : p.value);
+            });
+            return html;
+          }
         },
         legend: {
-          data: nodeOrder, top: 6, right: 10,
+          data: [
+            { name: 'core', itemStyle: { color: nodeColors.core } },
+            { name: 'middle', itemStyle: { color: nodeColors.middle } }
+          ],
+          top: 6, right: 10,
           textStyle: { color: textColor, fontSize: 11 }
         },
         grid: { left: 12, right: 20, top: 36, bottom: 44, containLabel: true },
@@ -812,9 +834,6 @@
       };
     });
 
-    const ntlNote = currentIndicator === 'ntl'
-      ? '  (Night Light city-level series not available — showing GDP)' : '';
-
     lineChart.setOption({
       title: null,
       tooltip: {
@@ -833,7 +852,7 @@
         itemWidth: 14, itemHeight: 8,
         itemGap: 8
       },
-      grid: { left: 46, right: 24, top: 38, bottom: 28 },
+      grid: { left: 46, right: 24, top: 52, bottom: 28 },
       xAxis: {
         type: 'category',
         data: years,
@@ -843,8 +862,8 @@
       },
       yAxis: {
         type: 'value',
-        name: (effectiveIndicator === 'gdp' ? 'GDP' : 'Population') + ' Index' + ntlNote,
-        nameTextStyle: { color: textColor, fontSize: 9, padding: [0, 0, 0, 4] },
+        name: currentIndicator === 'ntl' ? 'Night Light Index' : (effectiveIndicator === 'gdp' ? 'GDP Index' : 'Population Index'),
+        nameTextStyle: { color: textColor, fontSize: 10, padding: [0, 0, 0, 4] },
         axisLabel: { color: textColor, fontSize: 10 },
         splitLine: { lineStyle: { color: 'rgba(255,255,255,0.06)' } }
       },

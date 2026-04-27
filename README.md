@@ -6,11 +6,6 @@ An interactive web visualization exploring **spatial inequality in urban growth*
 
 ---
 
-## Project Aim and Research Focus
-
-This project investigates uneven urban growth through night-time light imagery, using brightness as a proxy for human activity, infrastructure concentration, and economic intensity. Rather than treating urban expansion as a single national trend, the project explores how growth varies across spatial scales: from global night-time light distributions, to China’s national brightness trajectory, to regional bright-area expansion, transport corridor development, and city hierarchy differences. The central aim is to show how urban analytics can reveal both the concentration and imbalance of development. By combining raster imagery, demographic and economic statistics, transport corridor data, and point-of-interest indicators, the project builds a multi-layered view of how Chinese cities have expanded, connected, and differentiated between 2000 and 2024.
-
-
 ## Data Sources
 
 | Dataset                    | Period    | Format | Source                                                                                                                                                                                       |
@@ -64,9 +59,84 @@ Overall, this project was developed as a lightweight static website using HTML, 
 
 ---
 
-## Website Structure and Interaction Logic
+## Page-based Methodology and Visualisation Workflow
 
-The website is structured as a full-screen narrative that guides users from broad spatial patterns to more detailed urban mechanisms. The opening section introduces the research theme and frames night-time light as an analytical lens for urban expansion imbalance. The global section provides an overview of worldwide brightness patterns, while the China trend section connects national night-time light change with GDP dynamics and key temporal events. The regional comparison section uses new and stable bright-area maps to compare major urban regions, allowing users to zoom, pan, and inspect differences in expansion patterns. The transport corridor page then shifts from regional patterns to infrastructural mechanisms, linking selected corridors with GDP, population, and night-time light indicators. Finally, the city hierarchy page provides a city-level comparison through linked maps and charts, allowing users to compare T1, T2, and T3 cities by growth intensity, efficiency, coordination, and functional support. Together, these interactions create an overview-to-detail narrative and support comparative exploration across scales.
+### Page 1: Global Night-time Light Overview
+
+Page 1 was created from global night-time light raster data. The raster layer was first checked in GIS software to confirm its coordinate reference system and spatial coverage. To make it suitable for web display, the raster was clipped or prepared to the required global extent and compressed into a web-friendly format. The purpose of this page was not to calculate derived indicators, but to establish night-time light as a visual proxy for urban activity, infrastructure concentration, and uneven settlement intensity. The processed raster was used as the main visual layer, allowing users to observe the global distribution of bright urban regions before moving into more detailed China-based analysis.
+
+### Page 2: China Night-time Light and GDP Trend
+
+Page 2 combines annual night-time light data with China’s GDP data to compare changes in urban brightness and economic growth over time. The GDP dataset was cleaned into a year-based table, while the night-time light data were organised by year so that both datasets could be compared consistently. The visualisation links the temporal pattern of national GDP growth with changes in night-time light intensity. This page therefore helps establish night-time light as an analytical indicator for urban and economic change, rather than only a visual background layer.
+
+### Page 3: New and Stable Bright Areas
+
+Page 3 identifies spatial change in bright areas using a temporal raster comparison method. Each night-time light raster was converted into a binary bright-area layer using a brightness threshold. Pixels above the threshold were classified as bright, and pixels below the threshold were classified as non-bright. Two categories were then calculated:
+
+`new_bright_area = bright_later_year AND NOT bright_baseline_year`
+
+`stable_bright_area = bright_later_year AND bright_baseline_year`
+
+This method separates newly emerging urban brightness from areas that remained consistently bright. The resulting raster-derived layers were styled as map layers to show where urban light expansion occurred and where existing bright cores remained stable. This page therefore focuses on spatial change rather than total brightness.
+
+### Page 4: Transport Corridors and Urban Expansion
+
+Page 4 analyses whether urban growth is concentrated along selected transport corridors. Four corridor GeoJSON layers were prepared and imported into QGIS. Because distance-based calculations must be performed in metres, the corridor layers were projected into a metre-based coordinate system before buffering. A corridor influence zone was then generated around each corridor line using a fixed buffer distance:
+
+`corridor_buffer = buffer(corridor_line, distance_km)`
+
+The buffer polygons were used as spatial units for aggregation. Night-time light values were extracted from annual raster layers within each corridor buffer. GDP and population tables were cleaned into long format and joined to cities associated with each corridor. The final corridor-year table used this structure:
+
+`corridor, year, ntl_value, gdp_value, population_value`
+
+Growth rates were calculated from the baseline year to the final year:
+
+`growth_rate = (value_2022 - value_2012) / value_2012`
+
+These indicators were used to create corridor-level maps, summary cards, and charts, allowing users to compare how different corridors relate to changes in night-time light, GDP, and population.
+
+### Page 5: City Hierarchy, Growth Coordination and Functional Support
+
+Page 5 compares Chinese cities by hierarchy. A city point layer was joined with a city-tier lookup table and classified into `T1`, `T2`, and `T3`. Annual night-time light, GDP, and population datasets were cleaned into city-year tables and standardised to 2012–2022. For each city and each indicator, a 2012-based index was calculated:
+
+`index_t = (value_t / value_2012) * 100`
+
+This produced `ntl_index`, `gdp_index`, and `population_index`, which drive the time-series chart. City-level growth rates were calculated as:
+
+`ntl_growth_rate = (ntl_2022 - ntl_2012) / ntl_2012`
+
+`gdp_growth_rate = (gdp_2022 - gdp_2012) / gdp_2012`
+
+`population_growth_rate = (population_2022 - population_2012) / population_2012`
+
+Three analytical indicators were then derived. Growth intensity was calculated as:
+
+`growth_intensity = (ntl_growth_rate + gdp_growth_rate + population_growth_rate) / 3`
+
+Growth efficiency was calculated as:
+
+`growth_efficiency = gdp_growth_rate / population_growth_rate`
+
+Cities with near-zero population growth were treated carefully to avoid unstable values. Coordination was calculated by comparing the three growth rates with their average:
+
+`average_growth = (ntl_growth_rate + gdp_growth_rate + population_growth_rate) / 3`
+
+`coordination_index = 1 / (1 + |ntl_growth_rate - average_growth| + |gdp_growth_rate - average_growth| + |population_growth_rate - average_growth|)`
+
+Functional support was calculated from OpenStreetMap POI data. Education, medical, and commercial POIs were filtered using the `fclass` field. A 25 km buffer was created around each city point, and POIs were counted within each buffer:
+
+`edu_count = count(education POIs within 25 km city buffer)`
+
+`medical_count = count(medical POIs within 25 km city buffer)`
+
+`commercial_count = count(commercial POIs within 25 km city buffer)`
+
+The support index was calculated using a log-transformed average:
+
+`support_index = [ln(1 + edu_count) + ln(1 + medical_count) + ln(1 + commercial_count)] / 3`
+
+The final city profile table was joined back to the city point layer and uploaded to Mapbox. The webpage uses this layer for the city map, while local CSV files drive the time-series and city-versus-tier comparison charts.
+
 
 ## Team
 

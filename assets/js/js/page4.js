@@ -508,7 +508,6 @@
     const mode = currentMode;
 
     if (mode === 'structure') {
-      if (ind === 'ntl') return null;
       const rows2022 = cityYearData.filter(d => d.year === 2022);
       const corridorIds = [...new Set(summaryData.map(d => d.corridor_id))];
       const nodeOrder = ['core', 'middle', 'peripheral'];
@@ -516,12 +515,16 @@
       const result = {};
       nodeOrder.forEach(nt => { result[nt] = {}; corridorIds.forEach(cid => { result[nt][cid] = 0; }); });
 
+      const valueField = ind === 'gdp' ? 'gdp_value'
+                       : ind === 'population' ? 'population_value'
+                       : 'ntl_value';
+
       rows2022.forEach(row => {
         const cid = row.corridor_id;
         const nt = row.node_type;
         if (!result[nt]) result[nt] = {};
         if (result[nt][cid] === undefined) result[nt][cid] = 0;
-        const val = ind === 'gdp' ? row.gdp_value : row.population_value;
+        const val = row[valueField];
         result[nt][cid] += (val || 0);
       });
 
@@ -546,21 +549,10 @@
   function updateBarChart() {
     if (!barChart) return;
 
-    const structBtn = document.querySelector('#page4ModeSwitch [data-mode="structure"]');
-    if (currentIndicator === 'ntl' && currentMode === 'structure') {
-      currentMode = 'total';
-      document.querySelectorAll('#page4ModeSwitch .page4-switch-btn').forEach(b => {
-        b.classList.toggle('is-active', b.dataset.mode === 'total');
-      });
-    }
-    if (structBtn) {
-      structBtn.classList.toggle('is-disabled', currentIndicator === 'ntl');
-    }
-
     const bd = getBarData();
     if (!bd) {
       barChart.setOption({
-        title: { text: 'Not available for Night Light', left: 'center', top: 'center',
+        title: { text: 'No data available', left: 'center', top: 'center',
           textStyle: { color: 'rgba(219,227,240,0.5)', fontSize: 14 } },
         xAxis: { show: false }, yAxis: { show: false }, series: []
       }, true);
@@ -912,11 +904,6 @@
     const modeLabel = { total: 'Total', rate: 'Growth Rate', structure: 'Structure' };
     const ind = currentIndicator;
     const mode = currentMode;
-
-    if (mode === 'structure' && ind === 'ntl') {
-      el.textContent = 'Structure view is not available for Night Light (no city-level NTL data).';
-      return;
-    }
 
     const bd = getBarData();
     if (!bd) {

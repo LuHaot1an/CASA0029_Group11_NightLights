@@ -6,7 +6,12 @@ An interactive web visualization exploring **spatial inequality in urban growth*
 
 ---
 
-### Data Sources
+## Project Aim and Research Focus
+
+This project investigates uneven urban growth through night-time light imagery, using brightness as a proxy for human activity, infrastructure concentration, and economic intensity. Rather than treating urban expansion as a single national trend, the project explores how growth varies across spatial scales: from global night-time light distributions, to China’s national brightness trajectory, to regional bright-area expansion, transport corridor development, and city hierarchy differences. The central aim is to show how urban analytics can reveal both the concentration and imbalance of development. By combining raster imagery, demographic and economic statistics, transport corridor data, and point-of-interest indicators, the project builds a multi-layered view of how Chinese cities have expanded, connected, and differentiated between 2000 and 2024.
+
+
+## Data Sources
 
 | Dataset                    | Period    | Format | Source                                                                                                                                                                                       |
 |:--------------------------:|:---------:|:------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
@@ -58,6 +63,10 @@ This project was developed as a static web-based urban data visualisation websit
 Overall, this project was developed as a lightweight static website using HTML, CSS, and Vanilla JavaScript. The technical stack combines narrative web design, interactive mapping, statistical visualisation, and spatial data processing tools. fullPage.js supports the full-screen storytelling structure, while ECharts and Mapbox GL JS are used to present chart-based and map-based visualisations. Spatial datasets were prepared with QGIS, ArcGIS Pro, and Mapbox Studio, and the final website was deployed through GitHub Pages. This technical approach allows the project to remain easy to access, transparent to review, and suitable for presenting urban night-time light data through an interactive web-based format.
 
 ---
+
+## Website Structure and Interaction Logic
+
+The website is structured as a full-screen narrative that guides users from broad spatial patterns to more detailed urban mechanisms. The opening section introduces the research theme and frames night-time light as an analytical lens for urban expansion imbalance. The global section provides an overview of worldwide brightness patterns, while the China trend section connects national night-time light change with GDP dynamics and key temporal events. The regional comparison section uses new and stable bright-area maps to compare major urban regions, allowing users to zoom, pan, and inspect differences in expansion patterns. The transport corridor page then shifts from regional patterns to infrastructural mechanisms, linking selected corridors with GDP, population, and night-time light indicators. Finally, the city hierarchy page provides a city-level comparison through linked maps and charts, allowing users to compare T1, T2, and T3 cities by growth intensity, efficiency, coordination, and functional support. Together, these interactions create an overview-to-detail narrative and support comparative exploration across scales.
 
 ## Team
 

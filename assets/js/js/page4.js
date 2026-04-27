@@ -48,6 +48,17 @@
     CY:  '#a29bfe'
   };
 
+  const CORRIDOR_DISPLAY_LABELS = {
+    CY: 'CC',
+    GS: 'GS',
+    HNH: 'SNH',
+    KG: 'BG'
+  };
+
+  function corridorDisplayLabel(cid) {
+    return CORRIDOR_DISPLAY_LABELS[cid] || cid;
+  }
+
   const DEFAULT_CORRIDOR_ORDER = ['KG', 'HNH', 'GS', 'CY'];
 
   const CITY_EN_NAMES = {
@@ -579,7 +590,7 @@
         xAxis: {
           type: 'category',
           data: cats,
-          axisLabel: { color: textColor, fontSize: 11 },
+          axisLabel: { color: textColor, fontSize: 11, formatter: corridorDisplayLabel },
           axisLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } },
           axisTick: { show: false }
         },
@@ -627,7 +638,7 @@
         xAxis: {
           type: 'category',
           data: corridorIds,
-          axisLabel: { color: textColor, fontSize: 11 },
+          axisLabel: { color: textColor, fontSize: 11, formatter: corridorDisplayLabel },
           axisLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } },
           axisTick: { show: false }
         },

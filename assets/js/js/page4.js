@@ -50,6 +50,57 @@
 
   const DEFAULT_CORRIDOR_ORDER = ['KG', 'HNH', 'GS', 'CY'];
 
+  const CITY_EN_NAMES = {
+    '广州市': 'Guangzhou',
+    '深圳市': 'Shenzhen',
+    '东莞市': 'Dongguan',
+    '上海市': 'Shanghai',
+    '南京市': 'Nanjing',
+    '无锡市': 'Wuxi',
+    '常州市': 'Changzhou',
+    '苏州市': 'Suzhou',
+    '杭州市': 'Hangzhou',
+    '宁波市': 'Ningbo',
+    '嘉兴市': 'Jiaxing',
+    '绍兴市': 'Shaoxing',
+    '北京市': 'Beijing',
+    '石家庄市': 'Shijiazhuang',
+    '邯郸市': 'Handan',
+    '邢台市': 'Xingtai',
+    '保定市': 'Baoding',
+    '郑州市': 'Zhengzhou',
+    '安阳市': 'Anyang',
+    '鹤壁市': 'Hebi',
+    '新乡市': 'Xinxiang',
+    '许昌市': 'Xuchang',
+    '信阳市': 'Xinyang',
+    '驻马店市': 'Zhumadian',
+    '武汉市': 'Wuhan',
+    '长沙市': 'Changsha',
+    '湘潭市': 'Xiangtan',
+    '衡阳市': 'Hengyang',
+    '岳阳市': 'Yueyang',
+    '郴州市': 'Chenzhou',
+    '韶关市': 'Shaoguan',
+    '重庆市': 'Chongqing',
+    '成都市': 'Chengdu',
+    '内江市': 'Neijiang',
+    '资阳市': 'Ziyang'
+  };
+
+  function cityEN(name) {
+    return CITY_EN_NAMES[name] || name || '';
+  }
+
+  function cityLabelExpression() {
+    return [
+      'match',
+      ['get', 'city'],
+      ...Object.entries(CITY_EN_NAMES).flat(),
+      ['get', 'city']
+    ];
+  }
+
   // ─── Page 4 State ───
   let currentCorridorId = null;
   let currentIndicator = 'ntl';
@@ -286,7 +337,7 @@
       source: 'corridor-cities',
       ...slFor(CITIES_SOURCE_URL, CITIES_SOURCE_LAYER),
       layout: {
-        'text-field': ['get', 'city'],
+        'text-field': cityLabelExpression(),
         'text-size': 10,
         'text-offset': [0, 1.4],
         'text-anchor': 'top',
@@ -340,7 +391,7 @@
     page4Map.on('mousemove', 'cities-circle', (e) => {
       if (e.features && e.features.length) {
         const p = e.features[0].properties;
-        tooltip.innerHTML = '<strong>' + (p.city || '') + '</strong>'
+        tooltip.innerHTML = '<strong>' + cityEN(p.city) + '</strong>'
           + '<div class="tt-row"><span>Corridor</span><span>' + (p.corridor_nm || '') + '</span></div>'
           + '<div class="tt-row"><span>Node type</span><span>' + (p.node_type || '') + '</span></div>';
         tooltip.style.display = 'block';
@@ -736,7 +787,7 @@
     const series = cities.map((city, i) => {
       const cityRows = rows.filter(d => d.city === city).sort((a, b) => a.year - b.year);
       return {
-        name: city,
+        name: cityEN(city),
         type: 'line',
         data: years.map(y => {
           const r = cityRows.find(d => d.year === y);
@@ -763,7 +814,7 @@
         confine: true
       },
       legend: {
-        data: cities,
+        data: cities.map(cityEN),
         top: 2, left: 10, right: 10,
         textStyle: { color: textColor, fontSize: 10 },
         type: 'scroll',

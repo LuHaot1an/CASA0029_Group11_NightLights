@@ -122,6 +122,7 @@
   let summaryData = [];
   let yearData = [];
   let cityYearData = [];
+  let cityNtlData = [];
 
   // ─── Chart instances ───
   let barChart = null;
@@ -163,14 +164,16 @@
   // DATA LOADING
   // =========================================================
   async function loadAllData() {
-    const [sumText, yearText, cityText] = await Promise.all([
+    const [sumText, yearText, cityText, cityNtlText] = await Promise.all([
       fetch('assets/data/data/chat/corridor_summary_metrics.csv').then(r => r.text()),
       fetch('assets/data/data/chat/corridor_year_metrics.csv').then(r => r.text()),
       fetch('assets/data/data/chat/corridor_city_year_metrics.csv').then(r => r.text()),
+      fetch('assets/data/page5data/chat/city_hierarchy_year_metrics.csv').then(r => r.text()),
     ]);
     summaryData = parseCSV(sumText);
     yearData = parseCSV(yearText);
     cityYearData = parseCSV(cityText);
+    cityNtlData = parseCSV(cityNtlText);
   }
 
   // =========================================================
@@ -799,40 +802,67 @@
 
   function renderCitiesView() {
     const cid = currentCorridorId;
-    let effectiveIndicator = currentIndicator;
-
-    if (effectiveIndicator === 'ntl') {
-      effectiveIndicator = 'gdp';
-    }
-
-    const rows = cityYearData.filter(d => d.corridor_id === cid).sort((a, b) => a.year - b.year);
-    if (!rows.length) return;
-
-    const cities = [...new Set(rows.map(d => d.city))];
-    const years = [...new Set(rows.map(d => d.year))].sort();
     const textColor = 'rgba(219,227,240,0.76)';
-
-    const field = effectiveIndicator === 'gdp' ? 'gdp_index' : 'population_index';
     const palette = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#a29bfe', '#fd79a8',
       '#00cec9', '#fab1a0', '#81ecec', '#dfe6e9', '#74b9ff',
       '#ffeaa7', '#55efc4', '#636e72', '#b2bec3'];
 
-    const series = cities.map((city, i) => {
-      const cityRows = rows.filter(d => d.city === city).sort((a, b) => a.year - b.year);
-      return {
-        name: cityEN(city),
-        type: 'line',
-        data: years.map(y => {
-          const r = cityRows.find(d => d.year === y);
-          return r ? r[field] : null;
-        }),
-        smooth: true,
-        symbol: 'circle',
-        symbolSize: 3,
-        lineStyle: { width: 2 },
-        itemStyle: { color: palette[i % palette.length] }
-      };
-    });
+    let cities, years, series, yAxisName;
+
+    if (currentIndicator === 'ntl') {
+      const corridorCities = [...new Set(
+        cityYearData.filter(d => d.corridor_id === cid).map(d => d.city)
+      )];
+      const ntlRows = cityNtlData.filter(d => corridorCities.includes(d.city))
+        .sort((a, b) => a.year - b.year);
+      if (!ntlRows.length) return;
+
+      cities = [...new Set(ntlRows.map(d => d.city))];
+      years = [...new Set(ntlRows.map(d => d.year))].sort();
+      yAxisName = 'Night Light Index';
+
+      series = cities.map((city, i) => {
+        const cityRows = ntlRows.filter(d => d.city === city).sort((a, b) => a.year - b.year);
+        return {
+          name: cityEN(city),
+          type: 'line',
+          data: years.map(y => {
+            const r = cityRows.find(d => d.year === y);
+            return r ? r.ntl_index : null;
+          }),
+          smooth: true,
+          symbol: 'circle',
+          symbolSize: 3,
+          lineStyle: { width: 2 },
+          itemStyle: { color: palette[i % palette.length] }
+        };
+      });
+    } else {
+      const rows = cityYearData.filter(d => d.corridor_id === cid).sort((a, b) => a.year - b.year);
+      if (!rows.length) return;
+
+      cities = [...new Set(rows.map(d => d.city))];
+      years = [...new Set(rows.map(d => d.year))].sort();
+      const field = currentIndicator === 'gdp' ? 'gdp_index' : 'population_index';
+      yAxisName = currentIndicator === 'gdp' ? 'GDP Index' : 'Population Index';
+
+      series = cities.map((city, i) => {
+        const cityRows = rows.filter(d => d.city === city).sort((a, b) => a.year - b.year);
+        return {
+          name: cityEN(city),
+          type: 'line',
+          data: years.map(y => {
+            const r = cityRows.find(d => d.year === y);
+            return r ? r[field] : null;
+          }),
+          smooth: true,
+          symbol: 'circle',
+          symbolSize: 3,
+          lineStyle: { width: 2 },
+          itemStyle: { color: palette[i % palette.length] }
+        };
+      });
+    }
 
     lineChart.setOption({
       title: null,
@@ -862,7 +892,7 @@
       },
       yAxis: {
         type: 'value',
-        name: currentIndicator === 'ntl' ? 'Night Light Index' : (effectiveIndicator === 'gdp' ? 'GDP Index' : 'Population Index'),
+        name: yAxisName,
         nameTextStyle: { color: textColor, fontSize: 10, padding: [0, 0, 0, 4] },
         axisLabel: { color: textColor, fontSize: 10 },
         splitLine: { lineStyle: { color: 'rgba(255,255,255,0.06)' } }
